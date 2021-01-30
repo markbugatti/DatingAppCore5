@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Output, OnInit, EventEmitter } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 
 @Component({
