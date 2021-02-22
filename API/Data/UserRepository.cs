@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -9,10 +13,28 @@ namespace API.Data
     public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
-        public UserRepository(DataContext context)
+        private readonly IMapper _maper;
+        public UserRepository(DataContext context, IMapper maper)
         {
+            _maper = maper;
             _context = context;
         }
+
+        public async Task<MemberDto> GetMemberAsync(string username)
+        {
+            return await _context.Users
+                .Where(x => x.UserName == username)
+                .ProjectTo<MemberDto>(_maper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        {
+            return await _context.Users
+                .ProjectTo<MemberDto>(_maper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id);
@@ -20,7 +42,7 @@ namespace API.Data
 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
-            var user =  await _context.Users
+            var user = await _context.Users
                         .Include(p => p.Photos)
                         .SingleOrDefaultAsync(x => x.UserName == username);
             return user;
@@ -30,7 +52,7 @@ namespace API.Data
         {
             var users = await _context.Users
                         .Include(p => p.Photos)
-                        .ToListAsync(); 
+                        .ToListAsync();
             return users;
         }
 
