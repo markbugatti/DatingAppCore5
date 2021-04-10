@@ -10,6 +10,9 @@ using System;
 
 namespace API.Services
 {
+    /// <summary>
+    /// This Service creates jwt token
+    /// </summary>
     public class TokenService : ITokenService
     {
         private readonly SymmetricSecurityKey _key;

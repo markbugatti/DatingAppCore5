@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// This controller is used for registering or login into system
+    /// </summary>
     public class AccountController : BaseApiController
     {
         private readonly DataContext _context;
@@ -21,6 +24,11 @@ namespace API.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Register a new user
+        /// </summary>
+        /// <param name="registerDto">User data</param>
+        /// <returns>Returns registered user<see cref="UserDto"/> or BadRequest if username isn't unique</returns>
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
@@ -48,6 +56,13 @@ namespace API.Controllers
             };
         }
 
+        /// <summary>
+        /// Logs in an existing user into system
+        /// </summary>
+        /// <param name="loginDto">User data</param>
+        /// <returns>Returns logged in user<see cref="UserDto"/>. 
+        /// Returns Unauthorized if user doesn't exist 
+        /// or login credentials weren't correct</returns>
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -68,6 +83,7 @@ namespace API.Controllers
                 Token = _tokenService.CreateToken(user),
             };
         }
+
         private async Task<bool> UserExists(string username)
         {
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
