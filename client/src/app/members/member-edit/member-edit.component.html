@@ -2,10 +2,11 @@
     <div class="col-4">
         <h1>Your profile</h1>
     </div>
+
     <div class="col-8">
-        <div class="alert alert-info">
-            <p><strong>Information</strong> You have made changes. Any unsaved changes will be lost.</p>
-        </div>    
+        <div class="alert alert-info mt-3" *ngIf="(editForm?.dirty || editForm?.touched)">
+            <strong>Information</strong> You have made changes. Any unsaved changes will be lost.
+        </div>
     </div>
     
     <div class="col-4">
@@ -31,41 +32,43 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button class="btn btn-success btn-block">Save changes</button>
+                <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">Save changes</button>
             </div>    
         </div>
     </div>
+
     
-    <div class="col-8">
-        <nav ngbNav #nav="ngbNav" class="nav-tabs member-tabset">
-            <ng-container ngbNavItem>
+    <form #editForm="ngForm" (ngSubmit)="updateMember()" id="editForm" class="col-8">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs member-tabset">
+            <li [ngbNavItem]="'about'">
                 <a ngbNavLink>About {{member.knownAs}}</a>
                 <ng-template ngbNavContent>
-                    <form>
-                        <h4>Description</h4>
-                        <textarea class="form-control" [(ngModel)]="member.introduction" name="introduction" row="6"></textarea>
-                        <h4 class="mt-2">Looking for</h4>
-                        <textarea class="form-control" [(ngModel)]="member.lookingFor" name="lookingfor" row="6"></textarea>
-                        <h4 class="mt-2">Interests</h4>
-                        <textarea class="form-control" [(ngModel)]="member.interests" name="interests" row="6"></textarea>
-                        <h4 class="mt-2">Location Details: </h4>
-                        <div class="form-inline">
-                            <label for="city">City: </label>
-                            <input [(ngModel)]="member.city" type="text" name="city" class="form-control mx-2">
-                            <label for="country">Country: </label>
-                            <input [(ngModel)]="member.country" type="text" name="country" class="form-control mx-2">
-                        </div>
-                    </form>                
+                    <h4>Description</h4>
+                    <textarea class="form-control" [(ngModel)]="member.introduction" name="introduction"
+                        rows="6"></textarea>
+                    <h4 class="mt-2">Looking for</h4>
+                    <textarea class="form-control" [(ngModel)]="member.lookingFor" name="lookingFor"
+                        rows="6"></textarea>
+                    <h4 class="mt-2">Interests</h4>
+                    <textarea class="form-control" [(ngModel)]="member.interests" name="interests" rows="6"></textarea>
+                    <h4 class="mt-2">Location Details:</h4>
+                    <div class="form-inline">
+                        <label for="city">City: </label>
+                        <input [(ngModel)]="member.city" type="text" name="city" class="form-control mx-2">
+                        <label for="country">Country: </label>
+                        <input [(ngModel)]="member.country" type="text" name="country" class="form-control mx-2">
+                    </div>
                 </ng-template>
-            </ng-container>    
-            <ng-container ngbNavItem>
+            </li>
+            <li [ngbNavItem]="'photos'">
                 <a ngbNavLink>Edit Photos</a>
                 <ng-template ngbNavContent>
-                    <p>Photo edit will go here</p>
+                    <p>Photo Edit will go here {{editForm.dirty}}</p>
                 </ng-template>
-            </ng-container>    
-        </nav>
-        
+            </li>
+        </ul>
+ 
         <div [ngbNavOutlet]="nav" class="mt-2"></div>
-    </div>
+    </form>
+    
 </div>
