@@ -63,7 +63,7 @@
             <li [ngbNavItem]="'photos'">
                 <a ngbNavLink>Edit Photos</a>
                 <ng-template ngbNavContent>
-                    <p>Photo Edit will go here {{editForm.dirty}}</p>
+                    <app-photo-editor [member]="member"></app-photo-editor>
                 </ng-template>
             </li>
         </ul>
