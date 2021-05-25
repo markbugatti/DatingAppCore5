@@ -24,8 +24,9 @@
             </li>
           </ul>
 
-          <div ngbDropdown class="dropdown ml-auto" *ngIf="(accountService.currentUser$ | async) as User">
-            <a ngbDropdownToggle class="dropdown-toggle text-light" role="button">Welcome {{User.username | titlecase}}</a>
+          <div ngbDropdown class="dropdown ml-auto" *ngIf="(accountService.currentUser$ | async) as user">
+            <img src="{{user.photoUrl}}" alt="{{user.username}}">
+            <a ngbDropdownToggle class="dropdown-toggle text-light ml-2" role="button">Welcome {{user.username | titlecase}}</a>
             <div ngbDropdownMenu class="dropdown-menu">
               <a routerLink="member/edit" class="dropdown-item">Edit Profile</a> 
               <div class="dropdown-divider"></div>
