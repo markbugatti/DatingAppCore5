@@ -3,3 +3,7 @@
     display: inline-block;
     margin-bottom: 20px;
  }
+
+.update-alert {
+    max-width: 600px;
+}
