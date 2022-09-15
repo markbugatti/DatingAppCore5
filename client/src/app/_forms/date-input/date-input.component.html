@@ -1,16 +1,18 @@
 <div class="form-group">
-    <input
+    <div class="input-group">
+        <input
         type="text"
         [class.is-invalid]='ngControl.touched && ngControl.invalid'
         class="form-control"
         [formControl]='ngControl.control'
         placeholder="{{label}}"
-        [(ngModel)]="model"
-        placeholder="dd-mmmm-yyyy"
-        name="dp"
-        ngbDatepicker
-        #d="ngbDatepicker"
-        (navigate)="date = $event.next"
+        ngbDatepicker #d="ngbDatepicker"
         [maxDate]="maxDate" 
-    >
+        >
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+        </div>
+        <div *ngIf="ngControl.control.errors?.required" class="invalid-feedback">{{label}} is required</div>
+    </div>
 </div>
+
