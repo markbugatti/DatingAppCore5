@@ -15,10 +15,11 @@
             "cwd": "${workspaceFolder}/API",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
+            // "serverReadyAction": {
+            //     "action": "openExternally",
+            //     "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+            //     // "uriFormat": "https://localhost:%s/swagger/index.html"
+            // },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
@@ -27,10 +28,24 @@
             }
         },
         {
+            "name": "Launch Edge",
+            "request": "launch",
+            "type": "msedge",
+            "url": "https://localhost:5001/swagger",
+            "webRoot": "${workspaceFolder}/API",
+            "preLaunchTask": "waitBeforeBrowserLaunch"
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Dating App .NetCore and Edge",
+            "configurations": [".NET Core Launch (web)", "Launch Edge"]
         }
     ]
 }
