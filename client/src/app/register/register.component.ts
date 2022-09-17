@@ -1,9 +1,9 @@
 import { Component, Output, OnInit, EventEmitter } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { AgeValidatorDirective } from '../_validators/date-validator.directive';
+import { PasswordMatchValidatorDirective } from '../_validators/password-match-validator.directive';
 
 @Component({
   selector: 'app-register',
@@ -11,19 +11,21 @@ import { AgeValidatorDirective } from '../_validators/date-validator.directive';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  @Output() cancelRegister = new EventEmitter(); 
+  @Output() cancelRegister = new EventEmitter();
   model: any = {};
   registerForm: FormGroup;
+  minDate: NgbDate;
   maxDate: NgbDate;
 
   private readonly minAge = 18;
+  private readonly passwordFieldName = 'password';
 
   constructor(
     private accountService: AccountService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private calendar: NgbCalendar,
-    private dateValidator: AgeValidatorDirective
+    private passwordMatchValidator: PasswordMatchValidatorDirective
     ) { }
 
   ngOnInit(): void {
@@ -36,22 +38,15 @@ export class RegisterComponent implements OnInit {
       gender: ['male'],
       username: ['', Validators.required],
       knownAs: ['', Validators.required],
-      dateOfBirth: ['', Validators.required, this.dateValidator.AgeValidator()],
+      dateOfBirth: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
-      confirmPassword: ['', [Validators.required, this.matchValues('password')]]
+      confirmPassword: ['', [Validators.required, this.passwordMatchValidator.matchValues(this.passwordFieldName)]]
     })
     this.registerForm.controls.password.valueChanges.subscribe(() => {
       this.registerForm.controls.confirmPassword.updateValueAndValidity();
     })
-  }
-
-  matchValues(matchTo: string): ValidatorFn {
-    return (control: AbstractControl) => {
-      return control?.value === control?.parent?.controls[matchTo].value 
-        ? null : {isMatching: true};
-    }
   }
 
   register() {

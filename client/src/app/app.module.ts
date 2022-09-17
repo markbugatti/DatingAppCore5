@@ -25,7 +25,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DateInputComponent } from './_forms/date-input/date-input.component';
-import { AgeValidatorDirective } from './_validators/date-validator.directive';
+import { PasswordMatchValidatorDirective } from './_validators/password-match-validator.directive';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,7 @@ import { AgeValidatorDirective } from './_validators/date-validator.directive';
     PhotoEditorComponent,
     TextInputComponent,
     DateInputComponent,
-    AgeValidatorDirective
+    PasswordMatchValidatorDirective
   ],
   imports: [
     BrowserModule,

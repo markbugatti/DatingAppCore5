@@ -10,13 +10,13 @@
             [startDate]='startDate'
             [maxDate]='maxDate'
             [(ngModel)]="model"
+            (change)="onChangeEvent($event)"
         >
         <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
         </div>
         <div *ngIf="ngControl.control.errors?.required" class="invalid-feedback">{{label}} is required</div>
-        <!-- min age validation -->
-        <div *ngIf="ngControl.control.errors?.['forbiddenAge']" class="invalid-feedback">Age should be greater then 18</div>
+        <div *ngIf="ngControl.control.errors?.ngbDate" class="invalid-feedback">Age should be greater then {{minAge}}</div>
     </div>
 </div>
 

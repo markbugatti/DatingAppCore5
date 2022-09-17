@@ -14,7 +14,7 @@ export class DateInputComponent implements ControlValueAccessor {
   model: NgbDate;
   startDate: NgbDate;
 
-  private readonly yearsToSubtract = 30;
+  private readonly minAge = 18;
 
   constructor(@Self() public ngControl: NgControl, private  calendar: NgbCalendar) {
     this.ngControl.valueAccessor = this;
@@ -23,16 +23,16 @@ export class DateInputComponent implements ControlValueAccessor {
   
   private setStartDate() {
     this.startDate = this.calendar.getToday();
-    this.startDate = this.calendar.getPrev(this.calendar.getToday(), 'y', 18)
+    this.startDate = this.calendar.getPrev(this.calendar.getToday(), 'y', this.minAge)
   }
 
-  writeValue(obj: any): void {
-  }
+  writeValue(obj: any): void { }
   
-  registerOnChange(fn: any): void {
-  }
+  registerOnChange(fn: any): void { }
   
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: any): void { }
+
+  onChangeEvent(event: any){
+    //console.log('input error: ' + this.ngControl.control.errors);
   }
-  
 }
