@@ -1,6 +1,6 @@
 import { Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-date-input',
@@ -11,13 +11,21 @@ export class DateInputComponent implements ControlValueAccessor {
   @Input() label: string;
   @Input() maxDate: Date;
 
-  model: NgbDateStruct
-  date: {year: number, month: number}
+  model: NgbDate;
+  startDate: NgbDate;
 
-  constructor(@Self() public ngControl: NgControl) {
+  private readonly yearsToSubtract = 30;
+
+  constructor(@Self() public ngControl: NgControl, private  calendar: NgbCalendar) {
     this.ngControl.valueAccessor = this;
+    this.setStartDate();
   }
   
+  private setStartDate() {
+    this.startDate = this.calendar.getToday();
+    this.startDate = this.calendar.getPrev(this.calendar.getToday(), 'y', 18)
+  }
+
   writeValue(obj: any): void {
   }
   

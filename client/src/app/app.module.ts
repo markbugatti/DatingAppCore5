@@ -25,6 +25,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DateInputComponent } from './_forms/date-input/date-input.component';
+import { AgeValidatorDirective } from './_validators/date-validator.directive';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { DateInputComponent } from './_forms/date-input/date-input.component';
     MemberEditComponent,
     PhotoEditorComponent,
     TextInputComponent,
-    DateInputComponent
+    DateInputComponent,
+    AgeValidatorDirective
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,7 @@ import { DateInputComponent } from './_forms/date-input/date-input.component';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

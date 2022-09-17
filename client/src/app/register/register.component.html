@@ -22,7 +22,7 @@
     </app-text-input>
     <app-date-input 
         [formControl]='registerForm.controls["dateOfBirth"]' 
-        [label]='"Date Of Birth"'>
+        [label]='"Date Of Birth"' [maxDate]='maxDate'>
     </app-date-input>
     <app-text-input 
         [formControl]='registerForm.controls["city"]' 
