@@ -5,6 +5,13 @@
    "version": "0.2.0",
    "configurations": [
         {
+            "name": "Launch Edge Angular Debug",
+            "request": "launch",
+            "type": "msedge",
+            "url": "https://localhost:4200",
+            "webRoot": "${workspaceFolder}/client"
+        },
+        {
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
