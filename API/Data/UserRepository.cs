@@ -13,10 +13,10 @@ namespace API.Data
     public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
-        private readonly IMapper _maper;
+        private readonly IMapper _mapper;
         public UserRepository(DataContext context, IMapper maper)
         {
-            _maper = maper;
+            _mapper = maper;
             _context = context;
         }
 
@@ -24,14 +24,14 @@ namespace API.Data
         {
             return await _context.Users
                 .Where(x => x.UserName == username)
-                .ProjectTo<MemberDto>(_maper.ConfigurationProvider)
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<MemberDto>> GetMembersAsync()
         {
             return await _context.Users
-                .ProjectTo<MemberDto>(_maper.ConfigurationProvider)
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
 
