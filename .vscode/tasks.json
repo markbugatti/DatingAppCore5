@@ -42,9 +42,11 @@
             "label": "waitBeforeBrowserLaunch",
             "type": "shell",
             "command": "timeout 5",
-            "windows": {
-              "command": "timeout 5"
-            },
+        },        
+        {
+            "label": "launchAngular",
+            "type": "shell",
+            "command": "cd client && npm start",
         }
     ]
 }

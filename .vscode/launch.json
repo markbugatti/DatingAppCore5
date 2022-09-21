@@ -1,58 +1,66 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
-   // Use hover for the description of the existing attributes
-   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-   "version": "0.2.0",
-   "configurations": [
-        {
-            "name": "Launch Edge Angular Debug",
-            "request": "launch",
-            "type": "msedge",
-            "url": "https://localhost:4200",
-            "webRoot": "${workspaceFolder}/client"
-        },
-        {
-            "name": ".NET Core Launch (web)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/API/bin/Debug/net5.0/API.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/API",
-            "stopAtEntry": false,
-            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
-            // "serverReadyAction": {
-            //     "action": "openExternally",
-            //     "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
-            //     // "uriFormat": "https://localhost:%s/swagger/index.html"
-            // },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
-            "name": "Launch Edge",
-            "request": "launch",
-            "type": "msedge",
-            "url": "https://localhost:5001/swagger",
-            "webRoot": "${workspaceFolder}/API",
-            "preLaunchTask": "waitBeforeBrowserLaunch"
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
-        }
-    ],
-    "compounds": [
-        {
-            "name": "Dating App .NetCore and Edge",
-            "configurations": [".NET Core Launch (web)", "Launch Edge"]
-        }
-    ]
-}
+    // Use IntelliSense to find out which attributes exist for C# debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+    "version": "0.2.0",
+    "configurations": [
+         {
+             "name": "Launch Edge Angular Debug",
+             "request": "launch",
+             "type": "msedge",
+             "url": "https://localhost:4200",
+             "webRoot": "${workspaceFolder}/client"
+         },
+         {
+             "name": ".NET Core Launch (web)",
+             "type": "coreclr",
+             "request": "launch",
+             "preLaunchTask": "build",
+             // If you have changed target frameworks, make sure to update the program path.
+             "program": "${workspaceFolder}/API/bin/Debug/net5.0/API.dll",
+             "args": [],
+             "cwd": "${workspaceFolder}/API",
+             "stopAtEntry": false,
+             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+             // "serverReadyAction": {
+             //     "action": "openExternally",
+             //     "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+             //     // "uriFormat": "https://localhost:%s/swagger/index.html"
+             // },
+             "env": {
+                 "ASPNETCORE_ENVIRONMENT": "Development"
+             },
+             "sourceFileMap": {
+                 "/Views": "${workspaceFolder}/Views"
+             }
+         },
+         {
+             "name": "Launch API Swagger Edge",
+             "request": "launch",
+             "type": "msedge",
+             "url": "https://localhost:5001/swagger",
+             "webRoot": "${workspaceFolder}/API",
+             "preLaunchTask": "waitBeforeBrowserLaunch"
+         },
+         {
+             "name": "Launch API Client Edge",
+             "request": "launch",
+             "type": "msedge",
+             "url": "https://localhost:4200",
+             "webRoot": "${workspaceFolder}",
+             "preLaunchTask": "launchAngular"
+         },
+         {
+             "name": ".NET Core Attach",
+             "type": "coreclr",
+             "request": "attach",
+             "processId": "${command:pickProcess}"
+         }
+     ],
+     "compounds": [
+         {
+             "name": "Dating App .NetCore and Edge",
+             "configurations": [".NET Core Launch (web)", "Launch API Swagger Edge", "Launch API Client Edge"]
+         }
+     ]
+ }
