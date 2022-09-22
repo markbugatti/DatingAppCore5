@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { PasswordMatchValidatorDirective } from '../_validators/password-match-validator.directive';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,8 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   minDate: NgbDate;
   maxDate: NgbDate;
+  validationErrors: string[] = [];
+
 
   private readonly minAge = 18;
   private readonly passwordFieldName = 'password';
@@ -25,7 +28,8 @@ export class RegisterComponent implements OnInit {
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private calendar: NgbCalendar,
-    private passwordMatchValidator: PasswordMatchValidatorDirective
+    private passwordMatchValidator: PasswordMatchValidatorDirective,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -50,14 +54,11 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    console.log(this.registerForm.value);
-    // this.accountService.register(this.model).subscribe(res => {
-    //   console.log(res);
-    //   this.cancel();
-    // }, res => {
-    //   console.log(res);
-    //   this.toastr.error(res.error)
-    // })
+    this.accountService.register(this.registerForm.value).subscribe(res => {
+      this.router.navigateByUrl('/members');
+    }, errors => {
+      this.validationErrors = errors;
+    })
   }
 
   cancel() {
