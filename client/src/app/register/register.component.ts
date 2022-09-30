@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers: [NgbDateNativeAdapter]
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
@@ -29,7 +30,8 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private calendar: NgbCalendar,
     private passwordMatchValidator: PasswordMatchValidatorDirective,
-    private router: Router
+    private router: Router,
+    private ngbDateNativeAdapter: NgbDateNativeAdapter
     ) { }
 
   ngOnInit(): void {
@@ -54,8 +56,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    var dateAdapter = new NgbDateNativeAdapter();
-    this.registerForm.value.dateOfBirth = dateAdapter.toModel(this.registerForm.value.dateOfBirth);
+    this.registerForm.value.dateOfBirth = this.ngbDateNativeAdapter.toModel(this.registerForm.value.dateOfBirth);
 
     this.accountService.register(this.registerForm.value).subscribe(res => {
       this.router.navigateByUrl('/members');

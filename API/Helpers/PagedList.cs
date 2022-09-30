@@ -27,17 +27,14 @@ namespace API.Helpers
         /// <param name="pageSize">
         /// The page size.
         /// </param>
-        private PagedList(IEnumerable<T> items, int pageNumber, int pageSize)
+        private PagedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
         {
-            var itemsList = items.ToList();
-            var count = itemsList.Count();
-
             this.CurrentPage = pageNumber;
             this.TotalPages = (int) Math.Ceiling(count / (double) pageSize);
             this.PageSize = pageSize;
             this.TotalItems = count;
 
-            this.AddRange(itemsList);
+            this.AddRange(items);
         }
 
         /// <summary>
@@ -77,10 +74,11 @@ namespace API.Helpers
         /// </returns>
         public static async Task<PagedList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
         {
+            var count = await source.CountAsync();
             var items = await source.Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-            return new PagedList<T>(items, pageNumber, pageSize);
+            return new PagedList<T>(items, count, pageNumber, pageSize);
         }
     }
 }
