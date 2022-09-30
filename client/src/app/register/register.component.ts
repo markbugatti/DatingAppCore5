@@ -2,7 +2,7 @@ import { Component, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
-import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbCalendar, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { PasswordMatchValidatorDirective } from '../_validators/password-match-validator.directive';
 import { Router } from '@angular/router';
 
@@ -54,6 +54,9 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+    var dateAdapter = new NgbDateNativeAdapter();
+    this.registerForm.value.dateOfBirth = dateAdapter.toModel(this.registerForm.value.dateOfBirth);
+
     this.accountService.register(this.registerForm.value).subscribe(res => {
       this.router.navigateByUrl('/members');
     }, errors => {
